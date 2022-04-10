@@ -1,5 +1,4 @@
-#![feature(plugin, custom_derive, const_fn, decl_macro)]
-#![plugin(rocket_codegen)]
+#![feature(plugin, decl_macro)]
 
 #[macro_use]
 extern crate diesel;
@@ -25,13 +24,17 @@ mod models;
 mod schema;
 mod static_files;
 
-fn rocket() -> rocket::Rocket {
+fn rocket() -> rocket::Rocket<P> {
     dotenv().ok();
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
     let pool = db::init_pool(database_url);
     rocket::ignite()
+        .manage(pool)
+        .mount("/", routes![static_files::all, static_files::index])
 }
 
-fn main() {}
+fn main() {
+    rocket().launch();
+}
