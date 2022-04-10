@@ -1,1 +1,1 @@
-# rust_api_with_db
+# Rust API with Postgres
