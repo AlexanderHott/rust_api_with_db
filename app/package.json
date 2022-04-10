@@ -1,0 +1,31 @@
+{
+  "name": "rust_api",
+  "version": "1.0.0",
+  "main": "brunch-config.js",
+  "scripts": {
+    "start": "brunch build && cd .. && cargo run",
+    "deploy": "brunch build --production",
+    "watch": "brunch watch --stdin"
+  },
+  "repository": "git@github.com:AlexanderHOtt/rust_api_with_db.git",
+  "author": "AlexanderHOtt",
+  "license": "MIT",
+  "devDependencies": {
+    "auto-reload-brunch": "^3.0.1",
+    "babel-brunch": "^7.0.1",
+    "brunch": "^4.0.0",
+    "clean-css-brunch": "^3.0.0",
+    "css-brunch": "^2.10.0",
+    "elm": "^0.19.1-5",
+    "elm-brunch": "^0.12.0",
+    "node-elm-compiler": "^5.0.6",
+    "uglify-js-brunch": "^2.10.0"
+  },
+  "dependencies": {
+    "elm-format": "^0.8.5",
+    "elm-review": "^2.7.1",
+    "elm-test": "^0.19.1-revision7",
+    "g": "^2.0.1",
+    "global": "^4.4.0"
+  }
+}

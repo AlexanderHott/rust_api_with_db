@@ -1,2 +1,5 @@
 /target
 .env
+node_modules
+app/js/main.js
+public/js/
