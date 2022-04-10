@@ -2,10 +2,10 @@ use diesel;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 
-use crate::schema::books;
-use crate::schema::books::dsl::books as all_books;
+use schema::books;
+use schema::books::dsl::books as all_books;
 
-#[derive(diesel::Queryable, Serialize, Debug, Clone)]
+#[derive(Serialize, Queryable, Debug, Clone)]
 pub struct Book {
     pub id: i32,
     pub title: String,
@@ -13,7 +13,7 @@ pub struct Book {
     pub published: bool,
 }
 
-#[derive(diesel::Insertable, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "books"]
 pub struct NewBook {
     pub title: String,
@@ -33,21 +33,23 @@ impl Book {
         all_books
             .order(books::id.desc())
             .load::<Book>(conn)
-            .expect("Error loading book")
+            .expect("error loading the books")
     }
 
     pub fn update_by_id(id: i32, conn: &PgConnection, book: NewBook) -> bool {
-        use crate::schema::books::dsl::{author as a, published as p, title as t};
+        use schema::books::dsl::{author as a, published as p, title as t};
         let NewBook {
             title,
             author,
             published,
         } = book;
+
         diesel::update(all_books.find(id))
-            .set((t.eq(title), a.eq(author), p.eq(published)))
+            .set((a.eq(author), p.eq(published), t.eq(title)))
             .get_result::<Book>(conn)
             .is_ok()
     }
+
     pub fn insert(book: NewBook, conn: &PgConnection) -> bool {
         diesel::insert_into(books::table)
             .values(&book)
@@ -66,6 +68,6 @@ impl Book {
         all_books
             .filter(books::author.eq(author))
             .load::<Book>(conn)
-            .expect("Error loading books")
+            .expect("Error loading books by author")
     }
 }
