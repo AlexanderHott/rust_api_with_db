@@ -2,7 +2,7 @@
 
 ## Quickstart
 
-Edit the `.env` file to point to a postgres database.
+Rename `.env.example` to `.env` and edit it to point to a postgres database.
 
 ```
 rustup default nightly
@@ -10,7 +10,11 @@ rustup default nightly
 cargo install diesel_cli --no-default-features --features postgres
 
 diesel migration run
+
+cargo run
 ```
+
+Routes can be found in `src/routes.rs`
 
 ## Diesel Commands
 
